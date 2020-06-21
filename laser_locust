@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'thor'
+
+class LaserLocust < Thor
+
+end
+
+LaserLocust.start(ARGV)

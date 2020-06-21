@@ -1,9 +1,33 @@
 #!/usr/bin/env ruby
 
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+
 require 'thor'
+require 'lib/url/list_products'
+require 'lib/ftp/list_products'
+require 'lib/logs/list_highest_traffic_hostnames'
+require 'lib/logs/list_most_requested_files'
 
 class LaserLocust < Thor
+  desc 'list_highest_traffic_hostnames LOG_FILE_PATH', 'list hostnames with highest traffic'
+  def list_highest_traffic_hostnames(log_file_path)
+    Logs::ListHighestTrafficHostnames.list(log_file_path)
+  end
 
+  desc 'list_most_requested_files LOG_FILE_PATH', 'list mosts requested files'
+  def list_most_requested_files(log_file_path)
+    Logs::ListMostRequestedFiles.list(log_file_path)
+  end
+
+  desc 'list_products_from_url URL', 'Parse and list products from URL Feed'
+  def list_products_from_url(url)
+    Url::ListProducts.list(url)
+  end
+
+  desc 'list_products_from_ftp URL', 'Parse and list products from FTP URL Feed'
+  def list_products_from_ftp(ftp_url)
+    Ftp::ListProducts.list(ftp_url)
+  end
 end
 
 LaserLocust.start(ARGV)

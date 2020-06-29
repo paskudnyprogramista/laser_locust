@@ -4,8 +4,8 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
 require 'thor'
-require 'lib/url/list_products'
-require 'lib/ftp/list_products'
+require 'lib/url/list_products_from_json'
+require 'lib/url/list_products_from_xml'
 require 'lib/logs/list_highest_traffic_hostnames'
 require 'lib/logs/list_most_requested_files'
 
@@ -20,14 +20,14 @@ class LaserLocust < Thor
     Logs::ListMostRequestedFiles.list(log_file_path)
   end
 
-  desc 'list_products_from_url URL', 'Parse and list products from URL Feed'
-  def list_products_from_url(url)
-    Url::ListProducts.list(url)
+  desc 'list_products_from_url URL', 'Parse and list products from XML Feed'
+  def list_products_from_xml(url)
+    Url::ListProductsFromXml.new(url).list
   end
 
-  desc 'list_products_from_ftp URL', 'Parse and list products from FTP URL Feed'
-  def list_products_from_ftp(ftp_url)
-    Ftp::ListProducts.list(ftp_url)
+  desc 'list_products_from_json URL', 'Parse and list products from JSON Feed'
+  def list_products_from_json(url)
+    Url::ListProductsFromJson.new(url).list
   end
 end
 
